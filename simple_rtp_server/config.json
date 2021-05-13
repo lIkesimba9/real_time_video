@@ -1,0 +1,19 @@
+{
+  "RTPServer": {
+    "network": {
+      "host_addr": "127.0.0.1",
+      "client_addr": "127.0.0.1",
+      "host_rtp_port": 5000,
+      "host_rtcp_port": 5001,
+      "client_rtcp_port": 5005
+    },
+    "codec": {
+      "bitrate": 500,
+      "tune": 4,
+      "thread_count": 2
+    },
+    "source": {
+      "dev": "/dev/video0"
+    }
+  }
+}

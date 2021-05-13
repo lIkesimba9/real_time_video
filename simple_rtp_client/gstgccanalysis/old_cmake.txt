@@ -1,0 +1,38 @@
+set(estimator
+#    "../../common/estimator/ack_bitrate_estimator.c"
+#    "../../common/estimator/ack_bitrate_estimator.h"
+    "../../common/estimator/aimd_rate_control.c"
+    "../../common/estimator/aimd_rate_control.h"
+#    "../../common/estimator/bitrate_controller.c"
+#    "../../common/estimator/bitrate_controller.h"
+#    "../../common/estimator/cc_feedback_adapter.c"
+#    "../../common/estimator/cc_feedback_adapter.h"
+#    "../../common/estimator/cc_loss_stat.c"
+#    "../../common/estimator/cc_loss_stat.h"
+#    "../../common/estimator/delay_base_bwe.c"
+#    "../../common/estimator/delay_base_bwe.h"
+    "../../common/estimator/estimator_common.c"
+    "../../common/estimator/estimator_common.h"
+    "../../common/estimator/inter_arrival.c"
+    "../../common/estimator/inter_arrival.h"
+    "../../common/estimator/kalman_filter.c"
+    "../../common/estimator/kalman_filter.h"
+    "../../common/estimator/overuse_detector.c"
+    "../../common/estimator/overuse_detector.h"
+    "../../common/estimator/rate_stat.c"
+    "../../common/estimator/rate_stat.h"
+    "../../common/estimator/remote_bitrate_estimator.c"
+    "../../common/estimator/remote_bitrate_estimator.h"
+#    "../../common/estimator/remote_estimator_proxy.c"
+#    "../../common/estimator/remote_estimator_proxy.h"
+#    "../../common/estimator/sender_bandwidth_estimator.c"
+#    "../../common/estimator/sender_bandwidth_estimator.h"
+#    "../../common/estimator/sender_history.c"
+#    "../../common/estimator/sender_history.h"
+#    "../../common/estimator/trendline.c"
+#    "../../common/estimator/trendline.h"
+)
+
+
+
+source_group("estimator" FILES ${estimator})
