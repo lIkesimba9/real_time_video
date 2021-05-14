@@ -1,4 +1,3 @@
 build/
-estimator_build/
-install/
 samples/
+CMakeLists.txt.user

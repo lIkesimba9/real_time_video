@@ -24,22 +24,23 @@ set(LIBS ${LIBS} ${GST_RTP_LIBRARIES} ${GST_LIBRARIES})
 
 
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
+set(CMAKE_CXX_STANDARD 17)
+
+#set(CMAKE_CXX_FLAGS "-Wl,--no-as-needed")
+#set(CMAKE_C_FLAGS "-Wl,--no-as-needed")
 
 
 add_library(gstgccanalysis SHARED ${SOURCE_LIB} ${HEADER_LIB})
+add_dependencies(gstgccanalysis estimator)
+
+#set(estimator_DIR ${CMAKE_BINARY_DIR}/../install/estimator/cmake/)
 
 
-set(estimator_DIR ${CMAKE_BINARY_DIR}/../install/estimator/cmake/)
-#set(estimator_DIR /home/simba9/disertion/real_time_video/esitmator/cmake/)
-message(${estimator_DIR})
-find_package(
-    estimator
-    CONFIG
-    REQUIRED)
-target_link_libraries(gstgccanalysis PRIVATE ${LIBS} estimator)
+target_link_libraries(gstgccanalysis PUBLIC estimator ${LIBS})
+
+
+
 
 
 

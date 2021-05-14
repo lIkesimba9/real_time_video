@@ -15,13 +15,19 @@
 #define k_rate_window_size				1000
 #define k_rate_scale					8000
 
+ int64_t sys_time() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return tv.tv_usec + (int64_t)tv.tv_sec * 1000 * 1000;
+}
+
 static void rbe_update_estimate(remote_bitrate_estimator_t* est, int64_t now_ts);
 
 remote_bitrate_estimator_t* rbe_create()
 {
 	remote_bitrate_estimator_t* rbe = calloc(1, sizeof(remote_bitrate_estimator_t));
 	rbe->interval_ts = k_process_interval_ms;
-	rbe->last_update_ts = GET_SYS_MS();
+    rbe->last_update_ts = sys_time();
 	rbe->last_packet_ts = -1;
 
 	/*初始化带宽统计器*/

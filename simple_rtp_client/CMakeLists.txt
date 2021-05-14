@@ -46,8 +46,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED YES)
 
 add_executable(simple_rtp_client ${SOURCE} ${HELP_SOURCE})
 
-add_subdirectory(gstgccanalysis)	
-
 target_link_libraries(simple_rtp_client ${LIBS})
 
 #install(TARGETS simple_rtp_client DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/..)

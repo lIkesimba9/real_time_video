@@ -47,34 +47,33 @@
 #ifndef __GST_GCCANALYSIS_H__
 #define __GST_GCCANALYSIS_H__
 
+#include "../estimator/header/remote_bitrate_estimator.h"
 #include <gst/gst.h>
 #include <stdio.h>
 #include <vector>
-#include "header/remote_bitrate_estimator.h"
 
 G_BEGIN_DECLS
 
 #define GST_TYPE_GCCANALYSIS (gst_gcc_analysis_get_type())
-G_DECLARE_FINAL_TYPE (GstGccAnalysis, gst_gcc_analysis,
-                     GST, PLUGIN_TEMPLATE, GstElement)
+G_DECLARE_FINAL_TYPE(GstGccAnalysis, gst_gcc_analysis, GST, PLUGIN_TEMPLATE,
+                     GstElement)
 
-#define GST_GCCANALYSIS(obj) \
-  (G_TYPE_CHECK_INSTANCE_CAST((obj),GST_TYPE_GCCANALYSIS,GstGccAnalysis))
+#define GST_GCCANALYSIS(obj)                                                   \
+  (G_TYPE_CHECK_INSTANCE_CAST((obj), GST_TYPE_GCCANALYSIS, GstGccAnalysis))
 
 using namespace std;
-struct _GstGccAnalysis
-{
-    GstElement element;
+struct _GstGccAnalysis {
+  GstElement element;
 
-    GstPad *sinkpad;
+  GstPad *sinkpad;
 
-    gboolean silent;
+  gboolean silent;
 
-    //estimator_proxy_t*			proxy;
-    remote_bitrate_estimator_t* rbe;
+  // estimator_proxy_t*			proxy;
+  remote_bitrate_estimator_t *rbe;
 
-    int							min_bitrate;
-    int							max_bitrate;
+  int min_bitrate;
+  int max_bitrate;
 };
 
 G_END_DECLS
