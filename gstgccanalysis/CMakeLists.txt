@@ -9,8 +9,8 @@ set(CMAKE_LINK_WHAT_YOU_USE ON)
 # §ß§Ñ§Û§Õ§Ö§Þ §ß§å§Ø§ß§í§Ö §á§Ñ§Ü§Ö§ä§í
 find_package(PkgConfig REQUIRED)
 # §Õ§à§Ý§Ø§ß§à §Ò§í§ä§î GSTREAMER, §Ñ §ß§Ö GST, §ß§à §ß§Ö §Ò§Ö§â§å§ã§î §å§ä§Ó§Ö§â§Ø§Õ§Ñ§ä§î
-pkg_check_modules(GSTREAMER REQUIRED gstreamer-1.0)
-pkg_check_modules(GSTREAMERRTP REQUIRED gstreamer-rtp-1.0)
+pkg_check_modules(GST REQUIRED gstreamer-1.0)
+pkg_check_modules(GST_RTP REQUIRED gstreamer-rtp-1.0)
 
 # §ã§à§Ù§Õ§Ñ§Ý§Ú §ä§Ñ§â§Ô§Ö§ä, §Ù§Ñ§Õ§Ñ§Ý§Ú §Ö§Ô§à §Ú§ã§ç§à§Õ§ß§í§Ö §æ§Ñ§Û§Ý§í
 add_library(gstgccanalysis SHARED)
