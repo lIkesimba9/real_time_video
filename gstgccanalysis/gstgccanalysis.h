@@ -50,6 +50,7 @@
 #include "estimator/header/remote_bitrate_estimator.h"
 #include <gst/gst.h>
 #include <stdio.h>
+#include <vector>
 
 G_BEGIN_DECLS
 
@@ -59,6 +60,7 @@ G_DECLARE_FINAL_TYPE(GstGccAnalysis, gst_gcc_analysis, GST, PLUGIN_TEMPLATE,
 
 #define GST_GCCANALYSIS(obj)                                                   \
   (G_TYPE_CHECK_INSTANCE_CAST((obj), GST_TYPE_GCCANALYSIS, GstGccAnalysis))
+
 
 struct _GstGccAnalysis {
   GstElement element;
@@ -77,3 +79,4 @@ struct _GstGccAnalysis {
 G_END_DECLS
 
 #endif /* __GST_GCCANALYSIS_H__ */
+

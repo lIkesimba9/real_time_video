@@ -60,7 +60,7 @@
 
 #include <gst/gst.h>
 #include <gst/rtp/rtp.h>
-
+#include <iostream>
 #include <sys/time.h>
 #include <time.h>
 
@@ -146,10 +146,16 @@ static void gst_gcc_analysis_init(GstGccAnalysis *gcc) {
     GST_PAD_SET_PROXY_CAPS(gcc->sinkpad);
     gst_element_add_pad(GST_ELEMENT(gcc), gcc->sinkpad);
     // gcc->a.resize(4);
+    std::cerr << "before create rbe" << '\n';
     gcc->rbe = rbe_create();
+
+    std::cerr << "after create rbe" << '\n';
     //  gcc->proxy = estimator_proxy_create(SIM_SEGMENT_HEADER_SIZE,0);
+
+    std::cerr << "set bitrate" << '\n';
     rbe_set_min_bitrate(gcc->rbe, MIN_BITRATE);
     rbe_set_max_bitrate(gcc->rbe, MAX_BITRATE);
+    std::cerr << "after set bitrate" << '\n';
 
     //  gcc->out = fopen("../samples/datanew.csv","wt");
     /*  fprintf(gcc->out,"RecvTime,RecvTimeHightBits,RecvTimeLowBits,"
@@ -241,13 +247,16 @@ static GstFlowReturn gst_gcc_analysis_chain(GstPad *pad, GstObject *parent,
     gst_rtp_buffer_get_extension_onebyte_header(&rtpBufer, 1, 0, &miliSec,
                                                 &size_timestamp);
     timestamp = *((long long *)miliSec);
+    std::cerr << "get packet" << '\n';
     int64_t now_ts = sys_time();
     int64_t size_data = gst_buffer_get_size(buf);
+    std::cerr << "before incoming" << '\n';
     rbe_incoming_packet(gcc->rbe, timestamp, now_ts, size_data, now_ts);
+    std::cerr << "after incoming" << '\n';
     uint32_t remb = 0;
-
+    std::cerr << "now ts" << now_ts << '\n';
     if (rbe_heartbeat(gcc->rbe, now_ts, &remb) == 0)
-        printf("estimate bitrate %lld Kbit/s\n" ,remb);
+        std::cerr << "bitrate" << remb << '\n';
 
     return GST_FLOW_OK;
 }
