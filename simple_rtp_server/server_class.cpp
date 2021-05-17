@@ -120,7 +120,8 @@ GstPadProbeReturn RTPServer::CallBackAddTimeToRtpPacket(GstPad *pad, GstPadProbe
 
     if (buffer != NULL) {
         // Замеряю время. И отправляю его.
-        int64_t time = GET_SYS_MS();
+        cerr << "time " << (int64_t)(*data) << '\n';
+        int64_t time = GET_SYS_MS() -  (int64_t)(*data);
           gconstpointer pointData = &time;
         if (gst_rtp_buffer_map(buffer, (GstMapFlags)GST_MAP_READWRITE, &rtp_buffer)) {
             gst_rtp_buffer_add_extension_onebyte_header(&rtp_buffer, 1, pointData, sizeof(time));
@@ -186,12 +187,14 @@ RTPServer::RTPServer(std::string pathToParams)
 {
     LoadParamFromConfigFile(pathToParams);
     pipeline_ = CreatePipeline();
+    first_ts = GET_SYS_MS();
     if (pipeline_ == NULL)
         throw invalid_argument("Error create pipeline");
 
     bus_ = gst_pipeline_get_bus (GST_PIPELINE (pipeline_));
     watch_id_ = gst_bus_add_watch (bus_, BusCallback, loop_);
     gst_object_unref (bus_);
+
 
 
     GstStateChangeReturn ret;
@@ -324,7 +327,7 @@ GstElement* RTPServer::CreatePipeline() {
     }
     //Пад для расширения заголовка RTP.
     GstPad *rtpPaySrcPad = gst_element_get_static_pad(rtph264pay, "src");
-    gst_pad_add_probe(rtpPaySrcPad, GST_PAD_PROBE_TYPE_BUFFER, (GstPadProbeCallback)CallBackAddTimeToRtpPacket, NULL, NULL);
+    gst_pad_add_probe(rtpPaySrcPad, GST_PAD_PROBE_TYPE_BUFFER, (GstPadProbeCallback)CallBackAddTimeToRtpPacket, (gpointer)&first_ts, NULL);
     gst_object_unref(GST_OBJECT(rtpPaySrcPad));
 
     // Подключаю сигнал по обработке принятых rtcp пакетов.

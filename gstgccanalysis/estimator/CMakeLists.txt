@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.20)
 add_library(estimator SHARED)
 
 target_sources(estimator PRIVATE
+ source/utils.c
  source/aimd_rate_control.c
  source/estimator_common.c
  source/inter_arrival.c

@@ -32,6 +32,7 @@ class RTPServer : public AbstractGstApp
     std::map<std::string,AbstractGstApp::ConfigData *> params_;
     GstElement* CreatePipeline() override;
     std::map<std::string,AbstractGstApp::ConfigData *> LoadFromJson(std::istream& input);
+    int64_t first_ts;
 public:
 
 

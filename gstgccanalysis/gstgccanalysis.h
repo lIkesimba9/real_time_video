@@ -50,8 +50,7 @@
 #include "estimator/header/remote_bitrate_estimator.h"
 #include <gst/gst.h>
 #include <stdio.h>
-#include <vector>
-
+#include "estimator/header/utils.h"
 G_BEGIN_DECLS
 
 #define GST_TYPE_GCCANALYSIS (gst_gcc_analysis_get_type())

@@ -60,17 +60,14 @@
 
 #include <gst/gst.h>
 #include <gst/rtp/rtp.h>
-#include <iostream>
+
 #include <sys/time.h>
 #include <time.h>
 
 
-int64_t sys_time() {
 
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return tv.tv_usec + (int64_t)tv.tv_sec * 1000 * 1000;
-}
+
+
 
 GST_DEBUG_CATEGORY_STATIC(gst_gcc_analysis_debug);
 #define GST_CAT_DEFAULT gst_gcc_analysis_debug
@@ -146,16 +143,13 @@ static void gst_gcc_analysis_init(GstGccAnalysis *gcc) {
     GST_PAD_SET_PROXY_CAPS(gcc->sinkpad);
     gst_element_add_pad(GST_ELEMENT(gcc), gcc->sinkpad);
     // gcc->a.resize(4);
-    std::cerr << "before create rbe" << '\n';
     gcc->rbe = rbe_create();
 
-    std::cerr << "after create rbe" << '\n';
     //  gcc->proxy = estimator_proxy_create(SIM_SEGMENT_HEADER_SIZE,0);
 
-    std::cerr << "set bitrate" << '\n';
     rbe_set_min_bitrate(gcc->rbe, MIN_BITRATE);
     rbe_set_max_bitrate(gcc->rbe, MAX_BITRATE);
-    std::cerr << "after set bitrate" << '\n';
+
 
     //  gcc->out = fopen("../samples/datanew.csv","wt");
     /*  fprintf(gcc->out,"RecvTime,RecvTimeHightBits,RecvTimeLowBits,"
@@ -244,19 +238,16 @@ static GstFlowReturn gst_gcc_analysis_chain(GstPad *pad, GstObject *parent,
     gpointer miliSec;
     int64_t timestamp;
     guint size_timestamp = sizeof(timestamp);
-    gst_rtp_buffer_get_extension_onebyte_header(&rtpBufer, 1, 0, &miliSec,
+  gst_rtp_buffer_get_extension_onebyte_header(&rtpBufer, 1, 0, &miliSec,
                                                 &size_timestamp);
     timestamp = *((long long *)miliSec);
-    std::cerr << "get packet" << '\n';
-    int64_t now_ts = sys_time();
+    int64_t now_ts = GET_SYS_MS();
     int64_t size_data = gst_buffer_get_size(buf);
-    std::cerr << "before incoming" << '\n';
+    //printf("timestamp is %lld *** now_ts is %lld *** size_data is %lld\n",timestamp,now_ts,size_data);
     rbe_incoming_packet(gcc->rbe, timestamp, now_ts, size_data, now_ts);
-    std::cerr << "after incoming" << '\n';
     uint32_t remb = 0;
-    std::cerr << "now ts" << now_ts << '\n';
     if (rbe_heartbeat(gcc->rbe, now_ts, &remb) == 0)
-        std::cerr << "bitrate" << remb << '\n';
+        printf("bitrate %lld\n",remb);
 
     return GST_FLOW_OK;
 }

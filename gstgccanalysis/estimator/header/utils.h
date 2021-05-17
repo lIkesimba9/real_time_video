@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef __utils_h_
 #define __utils_h_
 
@@ -20,12 +20,9 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-/*inline int64_t sys_time() {
-  struct timeval tv;
-  gettimeofday(&tv, NULL);
-  return tv.tv_usec + (int64_t)tv.tv_sec * 1000 * 1000;
-}*/
 
+#define GET_SYS_MS()		(su_get_sys_time() / 1000)
+int64_t su_get_sys_time();
 #define SU_MAX(a, b) ((a) > (b) ? (a) : (b))
 #define SU_MIN(a, b) ((a) < (b) ? (a) : (b))
 #define SU_ABS(a, b) ((a) > (b) ? ((a) - (b)) : ((b) - (a)))
