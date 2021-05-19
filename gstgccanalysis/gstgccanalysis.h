@@ -73,6 +73,7 @@ struct _GstGccAnalysis {
 
   int min_bitrate;
   int max_bitrate;
+  int64_t last_update_time;
 };
 
 G_END_DECLS

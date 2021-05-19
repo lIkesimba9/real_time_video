@@ -7,8 +7,8 @@ using namespace std;
 
 
 gboolean RTPServer::BusCallback (GstBus     *bus,
-                         GstMessage *msg,
-                         gpointer    data)
+                                GstMessage *msg,
+                                gpointer    data)
 {
     GMainLoop *loop = (GMainLoop *)data;
 
@@ -121,8 +121,8 @@ GstPadProbeReturn RTPServer::CallBackAddTimeToRtpPacket(GstPad *pad, GstPadProbe
     if (buffer != NULL) {
         // Замеряю время. И отправляю его.
         cerr << "time " << (int64_t)(*data) << '\n';
-        int64_t time = GET_SYS_MS() -  (int64_t)(*data);
-          gconstpointer pointData = &time;
+        int64_t time = GET_SYS_MS() ;//-  (int64_t)(*data);
+        gconstpointer pointData = &time;
         if (gst_rtp_buffer_map(buffer, (GstMapFlags)GST_MAP_READWRITE, &rtp_buffer)) {
             gst_rtp_buffer_add_extension_onebyte_header(&rtp_buffer, 1, pointData, sizeof(time));
             //cerr << "milisec: " << millis << '\n';

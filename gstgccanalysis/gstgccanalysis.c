@@ -149,6 +149,7 @@ static void gst_gcc_analysis_init(GstGccAnalysis *gcc) {
 
     rbe_set_min_bitrate(gcc->rbe, MIN_BITRATE);
     rbe_set_max_bitrate(gcc->rbe, MAX_BITRATE);
+    gcc->last_update_time = GET_SYS_MS();
 
 
     //  gcc->out = fopen("../samples/datanew.csv","wt");
@@ -246,9 +247,11 @@ static GstFlowReturn gst_gcc_analysis_chain(GstPad *pad, GstObject *parent,
     //printf("timestamp is %lld *** now_ts is %lld *** size_data is %lld\n",timestamp,now_ts,size_data);
     rbe_incoming_packet(gcc->rbe, timestamp, now_ts, size_data, now_ts);
     uint32_t remb = 0;
+    if(now_ts - gcc->last_update_time > 5){
     if (rbe_heartbeat(gcc->rbe, now_ts, &remb) == 0)
         printf("bitrate %lld\n",remb);
-
+    gcc->last_update_time = now_ts;
+    }
     return GST_FLOW_OK;
 }
 
